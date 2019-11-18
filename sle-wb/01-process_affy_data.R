@@ -10,6 +10,9 @@
 # load wrapper function for multiple normalization methods
 source(file.path("util", "affy_norm_functions.R"))
 
+library("future.apply")
+plan(multiprocess)
+
 # raw data resides in arrayexpress
 ae.dir <- file.path("sle-wb", "arrayexpress")
 # processed data dir
@@ -30,7 +33,7 @@ pairs.dir.list <- list(c(file.path(ae.dir, "E-GEOD-11907", "raw"),
                          file.path(process.dir, "E-GEOD-72747")))
 
 # for each accession, perform multi-method normalization
-lapply(pairs.dir.list,
+future_lapply(pairs.dir.list,
        function(x) AffyMultiNormWrapper(cel.dir = x[1],
                                         output.file.lead = x[2],
                                         norm.methods = "all"))

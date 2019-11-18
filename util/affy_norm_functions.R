@@ -73,7 +73,7 @@ AffyMultiNormWrapper <- function(cel.dir, output.file.lead,
     library(foreach)
     # start parallel backend
     # parallel backend
-    cl <- parallel::makeCluster(2)
+    cl <- parallel::makeCluster(parallel::detectCores())
     doParallel::registerDoParallel(cl)
     
     # load the correct package
